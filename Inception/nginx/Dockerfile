@@ -6,10 +6,12 @@ WORKDIR /app
 
 EXPOSE 443
 
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update && apt-get install -y nginx ufw
 
-RUN cp -r ./nginx.conf /etc/nginx/nginx.conf
+# RUN cp -r ./srcs/nginx.conf /etc/nginx/nginx.conf
 
-RUN cp -r ./default /etc/nginx/sites-available/default
+# RUN service nginx restart
 
-# CMD sh /app/srcs/scripts/docker_entrypoint.sh
+# RUN cp -r ./default /etc/nginx/sites-available/default
+
+CMD sh /app/srcs/docker_entrypoint.sh
