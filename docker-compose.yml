@@ -1,0 +1,9 @@
+services:
+  ftnginx:
+    image: ftnginx
+    ports:
+      - "443:443"
+  wp:
+    image: ftwp
+    ports:
+    - "9000:9000"
