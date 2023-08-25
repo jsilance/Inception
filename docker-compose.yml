@@ -7,3 +7,11 @@ services:
     image: ftwp
     ports:
     - "9000:9000"
+    volumes:
+    - ./wp/srcs/html:/var/www/html
+  db:
+    image: ftdb
+    ports:
+    - "3306:3306"
+    volumes:
+    - ./db/data:/var/lib/mysql
