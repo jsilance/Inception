@@ -4,15 +4,21 @@ COPY . /app
 
 WORKDIR /app
 
-EXPOSE 443
+EXPOSE 9000
 
-RUN apt-get update && apt-get install -y php-fpm php-mysql sudo wget
+RUN apt-get update && apt-get install -y php-fpm
 
 RUN mkdir -p /var/www/html
-RUN cd /var/www/html
-RUN sudo wget https://wordpress.org/latest.tar.gz
-RUN sudo tar -xzvf latest.tar.gz
-RUN sudo mv wordpress/* .
-RUN rmdir wordpress
+RUN mkdir -p /var/log/php-fpm/
+RUN mkdir -p /run/php/
+RUN chown -R www-data:www-data /run/php/
+RUN
 
-CMD "php-fpm -F"
+VOLUME [ "/var/www/html" ]
+
+RUN cp srcs/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+RUN cd /var/www/html
+RUN ls -l
+
+# CMD ["sh", "/app/srcs/entrypoint.sh"]
+CMD ["php-fpm7.3", "-F"]
