@@ -5,20 +5,20 @@ $(NAME): build run
 all: $(NAME)
 
 build:
-	docker build -t ftnginx ./nginx/
-	docker build -t ftwp ./wp/
-	docker build -t ftdb ./db/
+	docker-compose -f ./srcs/docker-compose.yml build
 
 run:
-	docker-compose up -d
+	docker-compose -f ./srcs/docker-compose.yml up -d
 
 clean:
-	-docker-compose down
+	-docker-compose -f ./srcs/docker-compose.yml down -v
 
 fclean: clean
-	-docker rmi ftnginx
-	-docker rmi ftwp
-	-docker rmi ftdb
+	-docker rmi nginx
+	-docker rmi wordpress
+	-docker rmi mariadb
+	-docker volume rm srcs_mariadb
+	-docker volume rm srcs_wordpress
 
 re: fclean all
 
