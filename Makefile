@@ -1,24 +1,28 @@
 NAME = Inception
 
+DOCK_COMP = ./srcs/docker-compose.yml
+
 $(NAME): build run
 
 all: $(NAME)
 
 build:
-	docker-compose -f ./srcs/docker-compose.yml build
+	-mkdir -p /home/jusilanc/data/mariadb
+	-mkdir -p /home/jusilanc/data/wordpress
+	docker-compose -f $(DOCK_COMP) build
 
 run:
-	docker-compose -f ./srcs/docker-compose.yml up -d
+	docker-compose -f $(DOCK_COMP) up -d
 
 clean:
-	-docker-compose -f ./srcs/docker-compose.yml down -v
+	-docker-compose -f $(DOCK_COMP) down -v
 
 fclean: clean
-	-docker rmi nginx
-	-docker rmi wordpress
-	-docker rmi mariadb
-	-docker volume rm srcs_mariadb
-	-docker volume rm srcs_wordpress
+	-docker rmi srcs_nginx
+	-docker rmi srcs_wordpress
+	-docker rmi srcs_mariadb
+	-docker volume rm mariadb
+	-docker volume rm wordpress
 
 re: fclean all
 
