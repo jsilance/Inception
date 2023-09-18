@@ -23,6 +23,7 @@ fclean: clean
 	-docker rmi srcs_mariadb
 	-docker volume rm mariadb
 	-docker volume rm wordpress
+	-docker network rm my-netwok
 
 re: fclean all
 

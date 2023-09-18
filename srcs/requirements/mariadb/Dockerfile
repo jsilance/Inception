@@ -1,6 +1,6 @@
 FROM debian:buster-20230725
 
-RUN apt update && apt upgrade && apt install -y mariadb-server vim curl
+RUN apt-get update && apt-get upgrade && apt-get install -y mariadb-server vim curl
 
 COPY conf/my.cnf /etc/mysql/my.cnf
 

@@ -4,7 +4,7 @@ WORKDIR /app
 
 EXPOSE 443
 
-RUN apt update && apt upgrade && apt install -y nginx vim curl openssl
+RUN apt-get update && apt-get upgrade && apt-get install -y nginx vim curl openssl
 
 RUN mkdir - /etc/nginx/ssl
 
