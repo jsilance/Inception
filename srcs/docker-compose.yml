@@ -5,12 +5,13 @@ services:
     ports:
       - "443:443"
     volumes:
-    - wordpress:/var/www/html
+    - wordpress:/app
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
     env_file: .env
     depends_on:
+    - mariadb
     - wordpress
     networks:
       - my-netwok
@@ -18,7 +19,7 @@ services:
   wordpress:
     container_name: wordpress
     volumes:
-    - wordpress:/var/www/wordpress
+    - wordpress:/app
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile

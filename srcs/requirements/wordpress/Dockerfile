@@ -1,29 +1,41 @@
 FROM debian:buster-20230725
 
+### -== INSTALL TOOLS ==- #
+
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y php7.3 php-fpm php-mysql mariadb-client wget sudo
 
-# RUN wget https://fr.wordpress.org/wordpress-6.3.1-fr_FR.tar.gz -P /var/www
-
-# RUN cd /var/www/ && tar -xzf wordpress-6.3.1-fr_FR.tar.gz && rm wordpress-6.3.1-fr_FR.tar.gz
-# RUN cd /var/www/
-
-# RUN chown -R root:root /var/www/wordpress
+WORKDIR /tmp
+RUN sudo mkdir -p /run/php
 
 COPY conf/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
-RUN wget http://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
+RUN groupadd wordpress && useradd -g wordpress wordpress
+
+RUN wget http://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
+RUN chmod 755 /usr/local/bin/wp
+
+### -== INSTALL WP ==- #
+
+
+RUN mkdir /app && chmod -R 755 /app /etc/php/7.3/fpm/php-fpm.conf /run/php && chown -R wordpress:wordpress /app /etc/php/7.3/fpm/php-fpm.conf /run/php
+WORKDIR /app
+
+
+RUN wget https://fr.wordpress.org/wordpress-6.3.1-fr_FR.tar.gz
+RUN tar -xf wordpress-6.3.1-fr_FR.tar.gz && mv wordpress/* . && rm -rf wordpress wordpress-6.3.1-fr_FR.tar.gz
+
+RUN chmod -R 755 /app
+RUN mkdir -p /usr/logs/php-fpm && chown -R wordpress:wordpress /usr/logs/php-fpm
+
+### -== SETUP CONF ==- #
 
 COPY tools/auto_conf.sh /tmp/auto_conf.sh
 
+USER wordpress
 
-RUN sudo mkdir -p /run/php
-# ENTRYPOINT [ "sudo", "sh", "/tmp/auto_conf.sh" ]
-
-# VOLUME [ "/var/www/html" ]
-
-CMD ["php-fpm7.3", "-F"]
+ENTRYPOINT [ "sh", "/tmp/auto_conf.sh" ]

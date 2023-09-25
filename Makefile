@@ -27,4 +27,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: build run all clean fclean re
+rip: fclean
+	-rm -rf ~/data
+
+.PHONY: build run all clean fclean re rip
