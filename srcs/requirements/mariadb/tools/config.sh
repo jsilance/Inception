@@ -8,13 +8,3 @@ FLUSH PRIVILEGES;
 SHOW GRANTS FOR '${SQL_USER}';" > /etc/my.sql
 
 mysqld_safe --init-file=/etc/my.sql;
-
-# service mysql start;
-# mysql -u root -p"${SQL_ROOT_PASSWORD}" <<EOF
-# CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};
-# CREATE USER IF NOT EXISTS ${SQL_USER}@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';
-# GRANT ALL PRIVILEGES ON ${SQL_DATABASE}.* TO ${SQL_USER}@'%' IDENTIFIED BY '${SQL_PASSWORD}';
-# FLUSH PRIVILEGES;
-# EOF
-# mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
-# exec mysqld_safe
