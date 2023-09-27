@@ -8,4 +8,4 @@ else
     wp core install --url=$DOMAIN_NAME --title="$WP_TITTLE" --admin_user=$WP_USER --admin_password=$WP_PASSWORD --admin_email=$WP_EMAIL
 fi
 
-php-fpm7.3 -F
+php-fpm7.4 -F

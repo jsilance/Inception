@@ -1,4 +1,4 @@
-FROM debian:buster-20230725
+FROM debian:bullseye
 
 WORKDIR /app
 

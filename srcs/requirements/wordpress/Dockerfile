@@ -1,15 +1,15 @@
-FROM debian:buster-20230725
+FROM debian:bullseye
 
 ### -== INSTALL TOOLS ==- #
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y php7.3 php-fpm php-mysql mariadb-client wget sudo
+RUN apt-get install -y php7.4 php-fpm php-mysql mariadb-client wget sudo
 
 WORKDIR /tmp
 RUN sudo mkdir -p /run/php
 
-COPY conf/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
 
 
 RUN groupadd wordpress && useradd -g wordpress wordpress
@@ -22,7 +22,7 @@ RUN chmod 755 /usr/local/bin/wp
 ### -== INSTALL WP ==- #
 
 
-RUN mkdir /app && chmod -R 755 /app /etc/php/7.3/fpm/php-fpm.conf /run/php && chown -R wordpress:wordpress /app /etc/php/7.3/fpm/php-fpm.conf /run/php
+RUN mkdir /app && chmod -R 755 /app /etc/php/7.4/fpm/php-fpm.conf /run/php && chown -R wordpress:wordpress /app /etc/php/7.4/fpm/php-fpm.conf /run/php
 WORKDIR /app
 
 
