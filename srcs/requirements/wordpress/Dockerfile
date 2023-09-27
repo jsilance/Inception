@@ -27,7 +27,10 @@ WORKDIR /app
 
 
 RUN wget https://fr.wordpress.org/wordpress-6.3.1-fr_FR.tar.gz
-RUN tar -xf wordpress-6.3.1-fr_FR.tar.gz && mv wordpress/* . && rm -rf wordpress wordpress-6.3.1-fr_FR.tar.gz
+RUN tar -xf wordpress-6.3.1-fr_FR.tar.gz
+RUN mv wordpress/* .
+RUN rm -rf wordpress wordpress-6.3.1-fr_FR.tar.gz
+# RUN ls -l
 
 RUN chmod -R 755 /app
 RUN mkdir -p /usr/logs/php-fpm && chown -R wordpress:wordpress /usr/logs/php-fpm
